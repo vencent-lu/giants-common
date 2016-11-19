@@ -131,7 +131,11 @@ public class EncryptionDevice {
 	 * @return 16进制编码密文
 	 */
 	public static String encryptRsaByHexCode(String plainText, PublicKey publicKey) {
-		return new String(Hex.encode(encryptRsa(plainText.getBytes(), publicKey)));
+		if (plainText == null) {
+			return null;
+		}
+		byte[] encryptRsaBytes = encryptRsa(plainText.getBytes(), publicKey);
+		return encryptRsaBytes != null ? new String(Hex.encode(encryptRsaBytes)) : null;
 	}
 	
 	/**
@@ -141,7 +145,11 @@ public class EncryptionDevice {
 	 * @return Base64编码密文
 	 */
 	public static String encryptRsaByBase64Code(String plainText, PublicKey publicKey) {
-		return new String(Base64.encode(encryptRsa(plainText.getBytes(), publicKey)));
+		if (plainText == null) {
+			return null;
+		}
+		byte[] encryptRsaBytes = encryptRsa(plainText.getBytes(), publicKey);
+		return encryptRsaBytes != null ? new String(Base64.encode(encryptRsaBytes)) : null;
 	}
 	
 	/**
@@ -183,7 +191,11 @@ public class EncryptionDevice {
 	 * @return 明文
 	 */
 	public static String decryptRsaByHexCode(String cipherText, PrivateKey privateKey) {
-		return new String(decryptRsa(Hex.decodeByString(cipherText), privateKey));
+		if (cipherText == null) {
+			return null;
+		}
+		byte[] decryptRsaBytes = decryptRsa(Hex.decodeByString(cipherText), privateKey);
+		return decryptRsaBytes != null ? new String(decryptRsaBytes) : null;
 	}
 	
 	/**
@@ -193,7 +205,11 @@ public class EncryptionDevice {
 	 * @return 明文
 	 */
 	public static String decryptRsaByBase64Code(String cipherText, PrivateKey privateKey) {
-		return new String(decryptRsa(Base64.decode(cipherText.getBytes()), privateKey));
+		if (cipherText == null) {
+			return null;
+		}
+		byte[] decryptRsaBytes = decryptRsa(Base64.decode(cipherText.getBytes()), privateKey);
+		return decryptRsaBytes != null ? new String(decryptRsaBytes) : null;
 	}
 	
 	/**
