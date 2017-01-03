@@ -6,6 +6,7 @@ package com.giants.common;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.context.support.ResourceBundleMessageSource;
 
 /**
@@ -55,6 +56,11 @@ public class SpringContextHelper implements ApplicationContextAware {
 		if (resourceBundleMessageSource == null) {
 			return null;
 		}
-		return resourceBundleMessageSource.getMessage(resourceKey, args, null);
+		try {
+			return resourceBundleMessageSource.getMessage(resourceKey, args, null);
+		} catch (NoSuchMessageException e) {
+			return resourceKey;
+		}		
 	}
+	
 }
