@@ -3,9 +3,12 @@
  */
 package com.giants.common.lang.reflect;
 
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class缓存信息bean,按需缓存,第一次使用时就进行缓存
@@ -21,7 +24,7 @@ public class ReflectBean {
 	
 	private boolean isGetSuperclass = false;
 	private Class<?> superclass;
-	
+		
 	private boolean isGetMethods = false;
 	private Method[] methods;
 	
@@ -33,6 +36,10 @@ public class ReflectBean {
 	
 	private Map<MethodKey, Boolean> methodInterfaceIsGetMap;
 	private Map<MethodKey, Class<?>> methodInterfaceMap;
+	
+	private PropertyDescriptor[] propertyDescriptors;
+	private Map<String, Boolean> propertyDescriptorIsGetMap;
+	private Map<String, PropertyDescriptor> propertyDescriptorMap;
 	
 	public ReflectBean(Class<?> beanClass) {
 		super();
@@ -65,6 +72,10 @@ public class ReflectBean {
 		return superclass;
 	}
 
+	/**
+	 * 返回某个类的所有公用（public）方法包括其继承类的公用方法，当然也包括它所实现接口的方法
+	 * @return
+	 */
 	public Method[] getMethods() {
 		if (!this.isGetMethods) {
 			this.methods = this.beanClass.getMethods();
@@ -73,6 +84,10 @@ public class ReflectBean {
 		return methods;
 	}
 
+	/**
+	 * 返回类或接口声明的所有方法，包括公共、保护、默认（包）访问和私有方法，但不包括继承的方法。当然也包括它所实现接口的方法
+	 * @return
+	 */
 	public Method[] getDeclaredMethods() {
 		if (!this.isGetDeclaredMethods) {
 			this.declaredMethods = this.beanClass.getDeclaredMethods();
@@ -135,33 +150,76 @@ public class ReflectBean {
 		methodInterfaceIsGetMap.put(methodKey, true);
 		return null;
 	}
+		
+    public PropertyDescriptor[] getPropertyDescriptors() throws IntrospectionException {
+        if (this.propertyDescriptors == null) {
+            this.propertyDescriptors = Introspector.getBeanInfo(this.beanClass).getPropertyDescriptors();
+            if (this.propertyDescriptors == null) {
+                this.propertyDescriptors = new PropertyDescriptor[0];
+            }
+        }
+        return this.propertyDescriptors;
+    }
+
+    public PropertyDescriptor getPropertyDescriptor(String propertyName) throws IntrospectionException {
+	    Map<String, Boolean> propertyDescriptorIsGetMap = this.getPropertyDescriptorIsGetMap();
+	    if (propertyDescriptorIsGetMap.get(propertyName) != null) {
+            return this.getPropertyDescriptorMap().get(propertyName);
+        }
+	    PropertyDescriptor[] propertyDescriptors = this.getPropertyDescriptors();
+	    for (int i = 0; i < propertyDescriptors.length; i++) {
+            if (propertyName.equals(propertyDescriptors[i].getName())) {
+                propertyDescriptorIsGetMap.put(propertyName, true);
+                this.getPropertyDescriptorMap().put(propertyName, propertyDescriptors[i]);
+                return propertyDescriptors[i];
+            }
+        }
+	    propertyDescriptorIsGetMap.put(propertyName, true);
+	    return null;
+	}
 		 
 	private Map<MethodKey, Boolean> getMethodIsGetMap() {
 		if (this.methodIsGetMap == null) {
-			this.methodIsGetMap = new HashMap<MethodKey, Boolean>();
+			this.methodIsGetMap = new ConcurrentHashMap<MethodKey, Boolean>();
 		}
 		return this.methodIsGetMap;
 	}
 
 	private Map<MethodKey, Method> getMethodMap() {
 		 if (this.methodMap == null) {
-			 this.methodMap = new HashMap<MethodKey, Method>();
+			 this.methodMap = new ConcurrentHashMap<MethodKey, Method>();
 		 }
 		 return this.methodMap;
 	 }
 	
 	private Map<MethodKey, Boolean> getMethodInterfaceIsGetMap() {
 		if (this.methodInterfaceIsGetMap == null) {
-			this.methodInterfaceIsGetMap = new HashMap<MethodKey, Boolean>();
+			this.methodInterfaceIsGetMap = new ConcurrentHashMap<MethodKey, Boolean>();
 		}
 		return this.methodInterfaceIsGetMap;
 	}
 
 	private Map<MethodKey, Class<?>> getMethodInterfaceMap() {
 		if (this.methodInterfaceMap == null) {
-			this.methodInterfaceMap = new HashMap<MethodKey, Class<?>>();
+			this.methodInterfaceMap = new ConcurrentHashMap<MethodKey, Class<?>>();
 		}
-		return methodInterfaceMap;
+		return this.methodInterfaceMap;
 	}
+
+    private Map<String, Boolean> getPropertyDescriptorIsGetMap() {
+        if (this.propertyDescriptorIsGetMap == null) {
+            this.propertyDescriptorIsGetMap = new ConcurrentHashMap<String, Boolean>();
+        }
+        return this.propertyDescriptorIsGetMap;
+    }
+
+    private Map<String, PropertyDescriptor> getPropertyDescriptorMap() {
+        if (this.propertyDescriptorMap == null) {
+            this.propertyDescriptorMap = new ConcurrentHashMap<String, PropertyDescriptor>();
+        }
+        return this.propertyDescriptorMap;
+    }
+	
+	
 		
 }

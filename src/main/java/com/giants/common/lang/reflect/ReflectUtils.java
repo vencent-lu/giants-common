@@ -3,11 +3,13 @@
  */
 package com.giants.common.lang.reflect;
 
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 反射工具类.增加反射缓存，提高反射性能
@@ -19,12 +21,12 @@ public class ReflectUtils {
 	/**
 	 * 缓存 Class
 	 */
-	private static final Map<String, Class<?>> classMap = new HashMap<String, Class<?>>();
+	private static final Map<String, Class<?>> classMap = new ConcurrentHashMap<String, Class<?>>();
 	
 	/**
 	 * 缓存 Class 反射信息
 	 */
-	private static final Map<Class<?>,ReflectBean> reflectMap = new HashMap<Class<?>,ReflectBean>();
+	private static final Map<Class<?>,ReflectBean> reflectMap = new ConcurrentHashMap<Class<?>,ReflectBean>();
 	
 	public static Class<?> classForName(String className)
 			throws ClassNotFoundException {
@@ -112,6 +114,20 @@ public class ReflectUtils {
         }
         return classes;
 	}
+	
+    public static PropertyDescriptor[] getPropertyDescriptors(Class<?> cls) throws IntrospectionException {
+        if (cls == null) {
+            return null;
+        }
+        return getReflectBean(cls).getPropertyDescriptors();
+    }
+    
+    public static PropertyDescriptor getPropertyDescriptor(Class<?> cls, String propertyName) throws IntrospectionException {
+        if (cls == null) {
+            return null;
+        }
+        return getReflectBean(cls).getPropertyDescriptor(propertyName);
+    }
 	
 	
 	private static ReflectBean getReflectBean(Class<?> cls) {
