@@ -47,4 +47,9 @@ public class SystemException extends GiantsException {
 		return GiantsConstants.ERROR_CODE_SYSTEM_ERROR;
 	}
 
+    @Override
+    public Object getErrorData() {
+        return null;
+    }
+
 }

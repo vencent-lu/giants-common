@@ -55,7 +55,12 @@ public class BusinessException extends GiantsException {
 		return GiantsConstants.ERROR_CODE_BUSINESS_EXCEPTION;
 	}
 
-	/**
+	@Override
+    public Object getErrorData() {
+        return null;
+    }
+
+    /**
 	 * @return the errorKey
 	 */
 	public String getErrorKey() {

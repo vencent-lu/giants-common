@@ -43,4 +43,10 @@ public class ViewException extends GiantsException {
 		return GiantsConstants.ERROR_CODE_VIEW_EXCEPTION;
 	}
 
+    @Override
+    public Object getErrorData() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

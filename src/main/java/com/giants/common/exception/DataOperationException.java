@@ -45,4 +45,9 @@ public class DataOperationException extends GiantsException {
 		return GiantsConstants.ERROR_CODE_DATA_OPERATION_EXCEPTION;
 	}
 
+    @Override
+    public Object getErrorData() {
+        return null;
+    }
+
 }

@@ -19,6 +19,7 @@ public abstract class GiantsException extends RuntimeException {
 	private String errorMessage;
 		
 	public abstract byte buildErrorCode();
+	public abstract Object getErrorData();
 				
 	public GiantsException() {
 		super();
@@ -90,9 +91,7 @@ public abstract class GiantsException extends RuntimeException {
 	public String getErrorMessage() {
 		return errorMessage;
 	}
-
-
-
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();

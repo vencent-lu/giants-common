@@ -53,6 +53,11 @@ public class DataValidationException extends GiantsException {
 	
 
 	@Override
+    public Object getErrorData() {
+        return null;
+    }
+
+    @Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("DataValidationException [errorMessageKey=");
