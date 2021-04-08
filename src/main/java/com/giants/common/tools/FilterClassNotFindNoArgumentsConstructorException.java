@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.tools;
 
@@ -9,7 +9,7 @@ package com.giants.common.tools;
  */
 public class FilterClassNotFindNoArgumentsConstructorException extends RuntimeException {
     private static final long serialVersionUID = -6507469962545809162L;
-    
+
     private Class<?> filterClass;
 
     protected FilterClassNotFindNoArgumentsConstructorException(Class<?> filterClass, Throwable e) {

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.regex;
 
@@ -8,10 +8,10 @@ package com.giants.common.regex;
  *
  */
 public interface Matcher {
-	
-	boolean find();
 
-	String group();
+    boolean find();
 
-	String group(int group);
+    String group();
+
+    String group(int group);
 }

@@ -9,16 +9,16 @@ public class Test {
 
     public static void main(String[] args) throws IllegalAccessException, InvocationTargetException, NoSuchMethodException, IllegalArgumentException, IntrospectionException {
         List<Bean> beans = new ArrayList<Bean>();
-        
+
         long time = System.currentTimeMillis();
-        for (int i=0; i<1000000; i++) {
-            byte gender = i%2 == 0 ? (byte)0 : (byte)1;
-            boolean adult =  i%2 == 0 ? true : false;
-            beans.add(new Bean(i+1, "name"+i, "address"+i, gender, i%100, adult));
+        for (int i = 0; i < 1000000; i++) {
+            byte gender = i % 2 == 0 ? (byte) 0 : (byte) 1;
+            boolean adult = i % 2 == 0 ? true : false;
+            beans.add(new Bean(i + 1, "name" + i, "address" + i, gender, i % 100, adult));
         }
-        System.out.println("init:"+ (System.currentTimeMillis() - time));
-        
-        for (int i=0; i<10; i++) {
+        System.out.println("init:" + (System.currentTimeMillis() - time));
+
+        for (int i = 0; i < 10; i++) {
             time = System.currentTimeMillis();
             for (Bean bean : beans) {
                 PropertyUtils.getProperty(bean, "id");
@@ -28,9 +28,9 @@ public class Test {
                 PropertyUtils.getProperty(bean, "age");
                 PropertyUtils.getProperty(bean, "adult");
             }
-            System.out.println("giants beanutils:"+ (System.currentTimeMillis() - time));
+            System.out.println("giants beanutils:" + (System.currentTimeMillis() - time));
             time = System.currentTimeMillis();
-                    
+
             for (Bean bean : beans) {
                 org.apache.commons.beanutils.PropertyUtils.getProperty(bean, "id");
                 org.apache.commons.beanutils.PropertyUtils.getProperty(bean, "name");
@@ -39,11 +39,10 @@ public class Test {
                 org.apache.commons.beanutils.PropertyUtils.getProperty(bean, "age");
                 org.apache.commons.beanutils.PropertyUtils.getProperty(bean, "adult");
             }
-            System.out.println("commons beanutils:"+ (System.currentTimeMillis() - time));
+            System.out.println("commons beanutils:" + (System.currentTimeMillis() - time));
         }
-               
-        
-        
+
+
     }
 
 }

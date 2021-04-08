@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.codec.rsa;
 
@@ -18,42 +18,43 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class RSAKeyPair implements Serializable {
-	private static final long serialVersionUID = 3379782164293464743L;
-	
-	private static final Logger  logger = LoggerFactory.getLogger(RSAKeyPair.class);
-	
-	private static KeyPairGenerator keyPairGenerator;
-	static {
-		try {
-			keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-		} catch (NoSuchAlgorithmException e) {
-			logger.error("KeyPairGenerator initialize error!", e);
-		}
-	}
-		
-	private int keysize;
-	private KeyPair keyPair;
-	
-	@SuppressWarnings("static-access")
-	public RSAKeyPair(int keysize) {
-		super();
-		this.keysize = keysize;
-		keyPairGenerator.initialize(keysize);
-		this.keyPair = this.keyPairGenerator.generateKeyPair();		
-	}
-	
-	public PublicKey getPublicKey() {
-		if (this.keyPair == null) {
-			return null;
-		}
-		return new PublicKey(this.keysize, (RSAPublicKey)this.keyPair.getPublic());
-	}
-	
-	public PrivateKey getPrivateKey() {
-		if (this.keyPair == null) {
-			return null;
-		}
-		return new PrivateKey(this.keysize, (RSAPrivateKey)this.keyPair.getPrivate());
-	}
+    private static final long serialVersionUID = 3379782164293464743L;
+
+    private static final Logger logger = LoggerFactory.getLogger(RSAKeyPair.class);
+
+    private static KeyPairGenerator keyPairGenerator;
+
+    static {
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+        } catch (NoSuchAlgorithmException e) {
+            logger.error("KeyPairGenerator initialize error!", e);
+        }
+    }
+
+    private int keysize;
+    private KeyPair keyPair;
+
+    @SuppressWarnings("static-access")
+    public RSAKeyPair(int keysize) {
+        super();
+        this.keysize = keysize;
+        keyPairGenerator.initialize(keysize);
+        this.keyPair = this.keyPairGenerator.generateKeyPair();
+    }
+
+    public PublicKey getPublicKey() {
+        if (this.keyPair == null) {
+            return null;
+        }
+        return new PublicKey(this.keysize, (RSAPublicKey) this.keyPair.getPublic());
+    }
+
+    public PrivateKey getPrivateKey() {
+        if (this.keyPair == null) {
+            return null;
+        }
+        return new PrivateKey(this.keysize, (RSAPrivateKey) this.keyPair.getPrivate());
+    }
 
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.beanutils;
 
@@ -16,9 +16,9 @@ import com.giants.common.lang.reflect.ReflectUtils;
  *
  */
 public class PropertyUtils {
-	
+
     public static Object getProperty(Object bean, String name)
-               throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
+            throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, IntrospectionException {
         PropertyDescriptor propertyDescriptor = ReflectUtils.getPropertyDescriptor(bean.getClass(), name);
         if (propertyDescriptor != null) {
             Method readMethod = propertyDescriptor.getReadMethod();
@@ -29,11 +29,11 @@ public class PropertyUtils {
             }
         } else {
             if (bean instanceof Map) {
-                return ((Map<?, ?>)bean).get(name);
+                return ((Map<?, ?>) bean).get(name);
             } else {
                 return null;
             }
         }
     }
-	
+
 }

@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.codec.rsa;
 
@@ -10,18 +10,18 @@ import java.security.interfaces.RSAPublicKey;
  *
  */
 public class PublicKey extends Key {
-	private static final long serialVersionUID = -4401649461688365395L;
-	
-	private RSAPublicKey rsaPublicKey;
+    private static final long serialVersionUID = -4401649461688365395L;
 
-	public PublicKey(int keysize, RSAPublicKey rsaPublicKey) {
-		super(keysize);
-		this.rsaPublicKey = rsaPublicKey;
-	}
+    private RSAPublicKey rsaPublicKey;
 
-	public RSAPublicKey getRsaPublicKey() {
-		return rsaPublicKey;
-	}
+    public PublicKey(int keysize, RSAPublicKey rsaPublicKey) {
+        super(keysize);
+        this.rsaPublicKey = rsaPublicKey;
+    }
 
-	
+    public RSAPublicKey getRsaPublicKey() {
+        return rsaPublicKey;
+    }
+
+
 }

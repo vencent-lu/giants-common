@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common;
 
@@ -14,53 +14,53 @@ import org.springframework.context.support.ResourceBundleMessageSource;
  *
  */
 public class SpringContextHelper implements ApplicationContextAware {
-	
-	private static ApplicationContext appContext;
-	private static String contextRealPath;
-	
-	private static ResourceBundleMessageSource resourceBundleMessageSource;
 
-	/* (non-Javadoc)
-	 * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
-	 */
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext)
-			throws BeansException {
-		appContext = applicationContext;
-		resourceBundleMessageSource = appContext.getBean(ResourceBundleMessageSource.class);
-	}
+    private static ApplicationContext appContext;
+    private static String contextRealPath;
 
-	/**
-	 * @return the appContext
-	 */
-	public static ApplicationContext getAppContext() {
-		return appContext;
-	}
+    private static ResourceBundleMessageSource resourceBundleMessageSource;
 
-	/**
-	 * @return the contextRealPath
-	 */
-	public static String getContextRealPath() {
-		return contextRealPath;
-	}
+    /* (non-Javadoc)
+     * @see org.springframework.context.ApplicationContextAware#setApplicationContext(org.springframework.context.ApplicationContext)
+     */
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext)
+            throws BeansException {
+        appContext = applicationContext;
+        resourceBundleMessageSource = appContext.getBean(ResourceBundleMessageSource.class);
+    }
 
-	public static final Object getSpringBean(String beanName) {
-		return appContext.getBean(beanName);
-	}
-	
-	public static final <T> T getSpringBean(Class<T> beanType) {
-		return appContext.getBean(beanType);
-	}
-	
-	public static final String getMessage(String resourceKey, Object... args) {
-		if (resourceBundleMessageSource == null) {
-			return null;
-		}
-		try {
-			return resourceBundleMessageSource.getMessage(resourceKey, args, null);
-		} catch (NoSuchMessageException e) {
-			return resourceKey;
-		}		
-	}
-	
+    /**
+     * @return the appContext
+     */
+    public static ApplicationContext getAppContext() {
+        return appContext;
+    }
+
+    /**
+     * @return the contextRealPath
+     */
+    public static String getContextRealPath() {
+        return contextRealPath;
+    }
+
+    public static final Object getSpringBean(String beanName) {
+        return appContext.getBean(beanName);
+    }
+
+    public static final <T> T getSpringBean(Class<T> beanType) {
+        return appContext.getBean(beanType);
+    }
+
+    public static final String getMessage(String resourceKey, Object... args) {
+        if (resourceBundleMessageSource == null) {
+            return null;
+        }
+        try {
+            return resourceBundleMessageSource.getMessage(resourceKey, args, null);
+        } catch (NoSuchMessageException e) {
+            return resourceKey;
+        }
+    }
+
 }

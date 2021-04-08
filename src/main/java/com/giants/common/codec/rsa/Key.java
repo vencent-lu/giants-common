@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.codec.rsa;
 
@@ -10,17 +10,17 @@ import java.io.Serializable;
  *
  */
 public abstract class Key implements Serializable {
-	private static final long serialVersionUID = -2971365067502323403L;
-	
-	private int keysize;
-	
-	public Key(int keysize) {
-		super();
-		this.keysize = keysize;
-	}
+    private static final long serialVersionUID = -2971365067502323403L;
 
-	public int getKeysize() {
-		return keysize;
-	}
+    private int keysize;
+
+    public Key(int keysize) {
+        super();
+        this.keysize = keysize;
+    }
+
+    public int getKeysize() {
+        return keysize;
+    }
 
 }

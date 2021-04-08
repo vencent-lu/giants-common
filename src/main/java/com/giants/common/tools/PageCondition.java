@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.tools;
 
@@ -14,7 +14,7 @@ import java.util.Map;
  * @author vencent.lu
  *
  */
-public class PageCondition extends PageQueryCondition<Map<String,Object>>{
+public class PageCondition extends PageQueryCondition<Map<String, Object>> {
     private static final long serialVersionUID = 8058559768466203956L;
 
 }

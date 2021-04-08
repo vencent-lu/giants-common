@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.giants.common.tools;
 
@@ -17,9 +17,9 @@ import com.giants.common.lang.StringUtil;
  */
 public class PageQueryCondition<T> implements Serializable {
     private static final long serialVersionUID = -6504219399633814605L;
-        
+
     private T filters;
-    
+
     private Integer pageNo;
 
     private Integer pageSize;
@@ -27,7 +27,7 @@ public class PageQueryCondition<T> implements Serializable {
     private String orderBy;
 
     private String orderSort;
-    
+
     protected PageQueryCondition() {
         super();
     }
@@ -38,7 +38,7 @@ public class PageQueryCondition<T> implements Serializable {
         this.pageNo = 1;
         this.pageSize = 10;
     }
-    
+
     public PageQueryCondition(T filters, Integer pageNo, Integer pageSize) {
         super();
         this.filters = filters;
@@ -54,7 +54,7 @@ public class PageQueryCondition<T> implements Serializable {
         this.orderBy = orderBy;
         this.orderSort = orderSort;
     }
-    
+
     public Integer getPageNo() {
         return pageNo;
     }
@@ -98,32 +98,32 @@ public class PageQueryCondition<T> implements Serializable {
         this.orderSort = orderSort;
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public  T getFilters() {
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    public T getFilters() {
         if (this.filters == null) {
             Class<T> filterClass = null;
             Type type = this.getClass().getGenericSuperclass();
             if (type instanceof ParameterizedType) {
-                Type genericType = ((ParameterizedType)type).getActualTypeArguments()[0];
+                Type genericType = ((ParameterizedType) type).getActualTypeArguments()[0];
                 if (genericType instanceof ParameterizedType) {
-                    filterClass = (Class<T>)((ParameterizedType)genericType).getRawType();
+                    filterClass = (Class<T>) ((ParameterizedType) genericType).getRawType();
                 } else {
-                    filterClass = (Class<T>)genericType;
+                    filterClass = (Class<T>) genericType;
                 }
             }
             if (filterClass == null) {
                 throw new NotFindFilterClassException();
             }
-            
-            if(filterClass.equals(Map.class)) {
-                this.filters = (T)new HashMap();
+
+            if (filterClass.equals(Map.class)) {
+                this.filters = (T) new HashMap();
             } else {
                 try {
-                    this.filters =filterClass.newInstance();
+                    this.filters = filterClass.newInstance();
                 } catch (InstantiationException | IllegalAccessException e) {
                     throw new FilterClassNotFindNoArgumentsConstructorException(filterClass, e);
                 }
-            }            
+            }
         }
         return filters;
     }
@@ -131,5 +131,5 @@ public class PageQueryCondition<T> implements Serializable {
     public void setFilters(T filters) {
         this.filters = filters;
     }
-    
+
 }
