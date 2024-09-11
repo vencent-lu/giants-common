@@ -45,8 +45,17 @@ AbstractMoveOrderService 实现了默认的排序功能
 ## com.giants.common.tools.CategoryCodeTools
 层级编码工具类，例如 地区、行业等多级树型结构编码生成工具类
 
+## com.giants.common.tools.categorycode.CategoryCodeToolsHelper
+层级编码工具帮助类简化编码操作，缓存CategoryCodeTools
+
 ## com.giants.common.tools.PageQueryCondition<T\>
 分布查询对象 泛型T 指定查询条件对象，PageCondition 使用Map作为查询条件对象
+
+## com.giants.common.tools.ValueExtractor
+从实体列中提取属性值
+
+## com.giants.common.tools.db.relationship.RelationEntityHandler、RelationEntityCompare
+关系实体 比较器、处理器
 
 ## com.giants.common.SpringContextHelper
 spring上下文工具类

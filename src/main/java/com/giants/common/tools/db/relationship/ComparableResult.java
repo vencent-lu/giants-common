@@ -3,7 +3,7 @@ package com.giants.common.tools.db.relationship;
 import java.util.List;
 
 /**
- * ComparableResult TODO
+ * ComparableResult 关系实体比较后的结果
  * date time: 2024/9/9 17:13
  * Copyright 2024 github.com/vencent-lu. All rights reserved.
  *

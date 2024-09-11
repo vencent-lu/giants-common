@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * RelationEntityHandler TODO
+ * ValueExtractor 从实体列中提取属性值
  * date time: 2024/9/10 18:19
  * Copyright 2024 github.com/vencent-lu. All rights reserved.
  *

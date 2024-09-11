@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * RelationEntityCompare TODO
+ * RelationEntityCompare 关系实体比较器
  * date time: 2024/9/10 17:51
  * Copyright 2024 github.com/vencent-lu. All rights reserved.
  *

@@ -1,7 +1,7 @@
 package com.giants.common.tools.db.relationship;
 
 /**
- * RelationEntityHandler TODO
+ * RelationEntityHandler 关系实体处理器
  * date time: 2024/9/10 18:19
  * Copyright 2024 github.com/vencent-lu. All rights reserved.
  *

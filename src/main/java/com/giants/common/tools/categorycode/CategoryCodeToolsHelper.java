@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * CategoryCodeToolsHelper TODO
+ * CategoryCodeToolsHelper 层级编码工具帮助类简化编码操作，缓存CategoryCodeTools
  * date time: 2024/9/9 11:13
  * Copyright 2024 github.com/vencent-lu. All rights reserved.
  *
