@@ -110,7 +110,7 @@
   <properties>
     <!-- 项目版本定义 -->
     <project-name>giants-common</project-name>
-	<spring.version>5.2.20.RELEASE</spring.version>
+	<spring.version>5.3.12</spring.version>
 
     <!-- Plugin的属性定义 -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
