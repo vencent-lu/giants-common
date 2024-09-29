@@ -18,10 +18,16 @@ public class RelationEntityCompare {
 
     public static <T extends Comparable<? super T>> ComparableResult<T> compare(List<T> sourceEntityList,
                                                                       List<T> targetEntityList) {
-        if (CollectionUtils.isEmpty(sourceEntityList)) {
+        if (sourceEntityList == null) {
+            sourceEntityList = Collections.emptyList();
+        }
+        if (targetEntityList == null) {
+            targetEntityList = Collections.emptyList();
+        }
+        if (sourceEntityList.isEmpty()) {
             return new ComparableResult<>(targetEntityList, Collections.emptyList(), Collections.emptyList());
         }
-        if (CollectionUtils.isEmpty(targetEntityList)) {
+        if (targetEntityList.isEmpty()) {
             return new ComparableResult<>(Collections.emptyList(), sourceEntityList, Collections.emptyList());
         }
 
