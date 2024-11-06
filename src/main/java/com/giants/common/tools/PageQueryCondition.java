@@ -98,34 +98,8 @@ public class PageQueryCondition<T> implements Serializable {
         this.orderSort = orderSort;
     }
 
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public T getFilters() {
-        if (this.filters == null) {
-            Class<T> filterClass = null;
-            Type type = this.getClass().getGenericSuperclass();
-            if (type instanceof ParameterizedType) {
-                Type genericType = ((ParameterizedType) type).getActualTypeArguments()[0];
-                if (genericType instanceof ParameterizedType) {
-                    filterClass = (Class<T>) ((ParameterizedType) genericType).getRawType();
-                } else {
-                    filterClass = (Class<T>) genericType;
-                }
-            }
-            if (filterClass == null) {
-                throw new NotFindFilterClassException();
-            }
-
-            if (filterClass.equals(Map.class)) {
-                this.filters = (T) new HashMap();
-            } else {
-                try {
-                    this.filters = filterClass.newInstance();
-                } catch (InstantiationException | IllegalAccessException e) {
-                    throw new FilterClassNotFindNoArgumentsConstructorException(filterClass, e);
-                }
-            }
-        }
-        return filters;
+        return this.filters;
     }
 
     public void setFilters(T filters) {
