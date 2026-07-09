@@ -1,63 +1,73 @@
 # giants-common
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.vencent-lu/giants-common/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.vencent-lu/giants-common)
 
-公用类库
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.vencent-lu/giants-common.svg)](https://central.sonatype.com/artifact/com.github.vencent-lu/giants-common)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-## com.giants.common.beanutils.BeanUtils
-继承于 org.apache.commons.beanutils.BeanUtils，增加 多属性复制、集合拷贝 等功能
+面向 Java 后端项目的公用类库，覆盖 Bean 拷贝、加解密、异常体系、分页、字符串/数字/中文处理、反射缓存、图片处理、层级编码、排序服务，以及 Spring 与 FastJSON 集成等常用能力。
 
-## com.giants.common.codec.EncryptionDevice
-加密器封装类 支持 MD5、RSA、DES 等加密算法
+- JDK 8+，基于 Maven 构建
+- 详尽的用法与示例见 **[使用手册 USAGE.md](USAGE.md)**
 
-## com.giants.common.exception
-异常定义包，包含以下 exception:
-* GiantsException : 顶层异常
-    * DataOperationException : 数据操作异常
-    * DataValidationException : 数据验证失败异常
-    * ViewException : 视图层异常
-    * SystemException : 系统未知异常
-    * BusinessException ： 业务异常
-        * NotAuthorityException : 未授权异常
-        * NotLoggedInException ：未登录异常
-        * TokenCodeIllegalException : Token非法异常
-        
-## com.giants.common.fastjson.FastJson
-FastJson 统一配置简化 FastJson 调用，注入fastJsonConfig 与spring mvc 统一FastJson配置
+## 快速开始
 
-## com.giants.common.file.ImageUtil
-图片处理工具类，包含图片缩放、添加水印 等功能
+```xml
+<dependency>
+  <groupId>com.github.vencent-lu</groupId>
+  <artifactId>giants-common</artifactId>
+  <version>1.3.2</version>
+</dependency>
+```
 
-## com.giants.common.lang
-工具类包，具体工具类如下:
-* ChineseStringUtil : 中文字符工具类
-* JavaUtil : JAVA工具类，主要包含 对象与字符串处理等功能
-* NamingConventionsUtils : 命名转换工具类
-* NumberUtils : 数字处理工具类
-* StringUtil : 字符串处理工具类
+```java
+// Bean 拷贝
+BeanUtils.copyProperties(userVO, userEntity);
 
-## com.giants.common.lang.reflect.ReflectUtils
-反射工具类，将反射结果缓存在内存中，提升级 反射调用性能
+// MD5 摘要
+String sign = EncryptionTools.MD5("data" + secret);
 
-## com.giants.common.tools.moveorderservice.MoveOrderService
-移动排序服务接口，支持 上移、下移、置顶(移至第一个)、置底(移至最后一个)
-AbstractMoveOrderService 实现了默认的排序功能
+// 分页查询条件
+PageQueryCondition<UserFilter> condition =
+        new PageQueryCondition<>(filter, 1, 20, "createTime", "DESC");
 
-## com.giants.common.tools.CategoryCodeTools
-层级编码工具类，例如 地区、行业等多级树型结构编码生成工具类
+// 抛出业务异常（携带 i18n 消息 key）
+throw new BusinessException("ORDER_NOT_FOUND", "order.notfound", orderId);
+```
 
-## com.giants.common.tools.categorycode.CategoryCodeToolsHelper
-层级编码工具帮助类简化编码操作，缓存CategoryCodeTools
+> `fastjson`、`spring-beans`、`spring-context` 为 optional 依赖，使用 `FastJson`、`SpringContextHelper` 时需自行引入。
 
-## com.giants.common.tools.PageQueryCondition<T\>
-分布查询对象 泛型T 指定查询条件对象，PageCondition 使用Map作为查询条件对象
+## 模块一览
 
-## com.giants.common.tools.ValueExtractor
-从实体列中提取属性值
+| 模块 | 入口类 | 说明 | 手册 |
+|------|--------|------|------|
+| Bean 工具 | `beanutils.BeanUtils` / `PropertyUtils` | 多属性/集合拷贝、Bean↔Map 互转、忽略 null 拷贝 | [↗](USAGE.md#1-bean-工具-beanutils--propertyutils) |
+| 加解密 | `codec.EncryptionDevice` | MD5、DES、RSA 加解密，Base64/Hex 编码 | [↗](USAGE.md#2-加解密-codec) |
+| 异常体系 | `exception.GiantsException` | 统一错误码 + i18n 消息 key 的异常层级 | [↗](USAGE.md#3-异常体系-exception) |
+| 分页 | `tools.PageQueryCondition` / `tools.Page` | 分页查询条件与结果封装 | [↗](USAGE.md#4-分页-page--pagequerycondition) |
+| 语言工具 | `lang.StringUtil` / `NumberUtils` / `ChineseStringUtil` / `NamingConventionsUtils` | 字符串、数字、中文、命名转换 | [↗](USAGE.md#5-语言工具-lang) |
+| 反射工具 | `lang.reflect.ReflectUtils` / `FieldUtils` | 带缓存的反射，提升调用性能 | [↗](USAGE.md#6-反射工具-reflect) |
+| 集合工具 | `collections.CollectionUtils` | 扩展 Apache Commons 集合工具 | [↗](USAGE.md#7-集合工具-collectionutils) |
+| 图片处理 | `file.ImageUtil` | 缩放、裁剪、格式转换、灰度、水印 | [↗](USAGE.md#8-图片处理-imageutil) |
+| 层级编码 | `tools.CategoryCodeTools` | 树形多级编码生成与解析 | [↗](USAGE.md#9-层级编码-categorycodetools) |
+| 移动排序 | `tools.moveorderservice.MoveOrderService` | 上移、下移、置前、置后 | [↗](USAGE.md#10-移动排序-moveorderservice) |
+| 关系实体比较 | `tools.db.relationship.RelationEntityCompare` | 新旧集合对比出增/删/改 | [↗](USAGE.md#11-关系实体比较-relationentity) |
+| 值提取 | `tools.ValueExtractor` | 从对象列表批量抽取属性值 | [↗](USAGE.md#12-值提取-valueextractor) |
+| 断言 | `Assert` | 参数校验断言 | [↗](USAGE.md#13-断言-assert) |
+| Spring 集成 | `SpringContextHelper` | 静态获取 Bean 与 i18n 消息 | [↗](USAGE.md#14-spring-集成-springcontexthelper) |
+| FastJSON 集成 | `fastjson.FastJson` | 统一 FastJSON 配置与调用 | [↗](USAGE.md#15-fastjson-集成-fastjson) |
 
-## com.giants.common.tools.db.relationship.RelationEntityHandler、RelationEntityCompare
-关系实体 比较器、处理器
+## 错误码速查
 
-## com.giants.common.SpringContextHelper
-spring上下文工具类
+| 错误码 | 异常类 | 含义 |
+|--------|--------|------|
+| 1 | `NotLoggedInException` | 未登录 |
+| 2 | `DataValidationException` | 数据校验失败 |
+| 3 | `BusinessException` | 业务异常 |
+| 4 | `NotAuthorityException` | 未授权 |
+| 5 | `DataOperationException` | 数据操作异常 |
+| 6 | `ViewException` | 视图层异常 |
+| 7 | `TokenCodeIllegalException` | Token 非法 |
+| 127 | `SystemException` | 系统未知异常 |
 
+## 许可证
 
+[Apache License 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
